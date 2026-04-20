@@ -2,6 +2,17 @@ from __future__ import annotations
 
 from collections import Counter
 from statistics import mean
+import json
+import os
+import yaml
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent.parent
+SLO_FILE_PATH = ROOT_DIR / "config" / "slo.yaml"
+
+with open(SLO_FILE_PATH, "r", encoding="utf-8") as f:
+    SLO_CONFIG = yaml.safe_load(f)
+
 
 REQUEST_LATENCIES: list[int] = []
 REQUEST_COSTS: list[float] = []
@@ -49,4 +60,5 @@ def snapshot() -> dict:
         "tokens_out_total": sum(REQUEST_TOKENS_OUT),
         "error_breakdown": dict(ERRORS),
         "quality_avg": round(mean(QUALITY_SCORES), 4) if QUALITY_SCORES else 0.0,
+        "slo_threshold": SLO_CONFIG['slis']
     }
