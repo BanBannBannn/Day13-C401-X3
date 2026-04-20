@@ -66,10 +66,10 @@
 - [TASKS_COMPLETED]: fix tracing.py
 - [EVIDENCE_LINK]: https://github.com/BanBannBannn/Day13-C401-X3/tree/811405621b1c34ccca31645f37385d4e1bfa4e49
 
-### [MEMBER_C_NAME]
+### [Võ Đại Phước]
 
-- [TASKS_COMPLETED]:
-- [EVIDENCE_LINK]:
+- [TASKS_COMPLETED]: slo+alert
+- [EVIDENCE_LINK]:https://github.com/BanBannBannn/Day13-C401-X3/tree/slo-alert
 
 ### Nguyễn Tùng Lâm
 - [TASKS_COMPLETED]:  UI(frontend)
