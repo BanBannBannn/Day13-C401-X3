@@ -288,16 +288,16 @@ function buildSLO(d) {
         {
             name: "P95 Latency",
             value: d.latency_p95 ?? 0,
-            threshold: 3000,
+            threshold: d.slo_threshold.latency_p95_ms.objective,
             fmt: v => `${v.toFixed(0)} ms`,
-            ok: v => v <= 3000,
+            ok: v => v <= d.slo_threshold.latency_p95_ms.objective,
         },
         {
-            name: "Quality Avg",
-            value: d.quality_avg ?? 0,
-            threshold: 0.75,
+            name: "Error Rate",
+            value: d.error_rate_pct ?? 0,
+            threshold: d.slo_threshold.error_rate_pct.objective,
             fmt: v => v.toFixed(2),
-            ok: v => v >= 0.75,
+            ok: v => v >= d.slo_threshold.error_rate_pct.objective,
         },
         {
             name: "Avg Cost / req",
@@ -307,12 +307,12 @@ function buildSLO(d) {
             ok: v => v <= 0.005,
         },
         {
-            name: "Total Cost",
-            value: d.total_cost_usd ?? 0,
-            threshold: 2.5,
-            fmt: v => `$${v.toFixed(4)}`,
-            ok: v => v <= 2.5,
-        },
+            name: "Quality Avg",
+            value: d.quality_avg ?? 0,
+            threshold: d.slo_threshold.quality_avg.objective,
+            fmt: v => v.toFixed(2),
+            ok: v => v >= d.slo_threshold.quality_avg.objective,
+        }
     ];
 
     document.getElementById("slo-list").innerHTML = slos.map(s => {

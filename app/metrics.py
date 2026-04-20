@@ -37,7 +37,12 @@ def record_request(latency_ms: int, cost_usd: float, tokens_in: int, tokens_out:
 def record_error(error_type: str) -> None:
     ERRORS[error_type] += 1
 
+def error_rate_pct() -> float:
+    if TRAFFIC == 0:
+        return 0.0
 
+    total_errors = sum(ERRORS.values())
+    return round((total_errors / TRAFFIC) * 100, 4)
 
 def percentile(values: list[int], p: int) -> float:
     if not values:
@@ -49,6 +54,7 @@ def percentile(values: list[int], p: int) -> float:
 
 
 def snapshot() -> dict:
+    total_errors = sum(ERRORS.values())
     return {
         "traffic": TRAFFIC,
         "latency_p50": percentile(REQUEST_LATENCIES, 50),
@@ -59,6 +65,7 @@ def snapshot() -> dict:
         "tokens_in_total": sum(REQUEST_TOKENS_IN),
         "tokens_out_total": sum(REQUEST_TOKENS_OUT),
         "error_breakdown": dict(ERRORS),
+        "error_rate_pct": round((total_errors / TRAFFIC) * 100, 4) if TRAFFIC else 0.0,
         "quality_avg": round(mean(QUALITY_SCORES), 4) if QUALITY_SCORES else 0.0,
         "slo_threshold": SLO_CONFIG['slis']
     }
